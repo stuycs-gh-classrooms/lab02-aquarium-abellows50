@@ -3,6 +3,15 @@ class Animal {
   color c;
   int size;
   
+  int sizeL;
+  int sizeH;
+  
+  
+  
+  
+  
+  
+  
   Tank myTank; //to know container attributes
   
   int MAXVELOCITY = 10;
@@ -17,9 +26,6 @@ class Animal {
   Animal(int x,int y, int size, Tank myTank){
     this.size = size;
     position = new PVector(x,y);
-    //int x_velocity = (int) random(-10,10);
-    //int y_velocity = (int) random(-10,10);
-    //velocity = new PVector(x_velocity, y_velocity);
     velocity = new PVector();
     c = #FF0000;
     this.myTank = myTank;
@@ -147,4 +153,15 @@ class Animal {
   boolean isTouching(Animal other){
     return dist(this.position.x,this.position.y,other.position.x,other.position.y) < (this.size+other.size)/2 - 4;
   }
+  
+  //NEW METHODS
+  int speedGenerator() {
+    int genspeed = int(random(-4,4));
+    while (genspeed == 0) {
+       genspeed = int(random(-4,4));
+    } 
+    return genspeed;
+  }
+  
+  
 }

@@ -1,8 +1,8 @@
 class Goldfish extends Animal {
   
-  Goldfish(int px, int py) {
-    super(px, py);
-    body = color(198, 131, 108);
+  Goldfish(int px, int py, Tank myTank) {
+    super(px, py, myTank);
+    c = color(198, 131, 108);
     velocity.y += 3;
   }
   

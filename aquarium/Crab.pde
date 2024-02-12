@@ -1,19 +1,19 @@
 class Crab extends Animal {
   boolean reachedFloor = false;
 
-  Crab(int _ax, int _ay) {
-    super(_ax, _ay);
+  Crab(int _ax, int _ay, Tank myTank) {
+    super(_ax, _ay, myTank);
   }
 
   void move() {
-    if (yspeed < 0) {
-      yspeed *= -1;
+    if (velocity.y < 0) {
+      velocity.y *= -1;
     }
     if (!reachedFloor) {
-      if (ay + ah >= height-floorH) {
+      if (position.y + sizeH >= myTank.bottomCorner().y - myTank.floor_height) {
         reachedFloor = true;
-        yspeed = 0; // Stop falling when reached the floor
-        xspeed = speedGenerator(); // Start crawling randomly left or right
+        velocity.y = 0; // Stop falling when reached the floor
+        velocity.x = speedGenerator(); // Start crawling randomly left or right
       } else {
         ay += yspeed; // Continue falling until reached the floor
       }
