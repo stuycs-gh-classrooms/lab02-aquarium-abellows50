@@ -24,5 +24,9 @@ void draw() {
 }
 
 void mouseClicked() {
-  t.populate(100);
+  t.populate(10);
+}
+
+void keyPressed(){
+  t.addAnimal(key);
 }

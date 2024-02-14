@@ -5,13 +5,7 @@ class Animal {
   
   int sizeL;
   int sizeH;
-  
-  
-  
-  
-  
-  
-  
+    
   Tank myTank; //to know container attributes
   
   int MAXVELOCITY = 10;

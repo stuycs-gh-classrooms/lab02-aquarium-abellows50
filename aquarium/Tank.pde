@@ -76,4 +76,18 @@ class Tank {
     return new PVector(x,y);
   }
   
+  
+  
+  
+  
+  
+  
+  ////////////////////////
+  void addAnimal(char i){
+    switch(i){
+      case '0':
+        animals.add(new Starfish(mouseX,mouseY,50,this));
+        break;
+    }
+  }
 }
