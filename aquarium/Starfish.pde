@@ -17,9 +17,12 @@ class Starfish extends Animal {
    }
    
    void changeV(){
-    int dx = (int)random(-1,1);
-    int dy = (int)random(-1,1);
-    changeV(dx,dy);
+     int dy = 0;
+     if (position.y + random((-myTank.h+myTank.floor_height)/2) < myTank.floor_height){
+       println("above sand");
+        dy = (int)random(-2,4);
+     }
+    changeV(0,dy);
   }
    
   }
