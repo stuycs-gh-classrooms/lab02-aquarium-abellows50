@@ -1,15 +1,15 @@
 class Fish extends Animal{
   PImage img;
   
-  Fish(int x,int y, int size, Tank myTank){
+  Fish(int x,int y, int size, Tank myTank, PImage img){
     super(x,y,size,myTank);
-    img = loadImage("fish.png");
+    this.img = img;
     this.foodChainID = size/2;
-    this.MAXVELOCITY = 20;
+    this.MAXVELOCITY = 5;
   }
   
-  Fish(int x,int y, Tank myTank){
-    this(x,y,10, myTank);
+  Fish(int x,int y, Tank myTank, PImage img){
+    this(x,y,10, myTank, img);
   }
   
   Fish(Tank myTank){

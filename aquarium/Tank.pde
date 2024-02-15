@@ -26,22 +26,19 @@ class Tank {
     }
   }
   
-  void addAnimal(int x, int y){
-    animals.add(new Fish(x,y,this));
-  }
-  
+ 
   
   void populate(int n){
     for (int i = 0; i<n; i++){
       int species = (int) random(3);
       if(species == 0){
-        animals.add(new Fish((int) random(x,x+w), (int) random(y + h), this));
+        animals.add(new Fish((int) random(x,x+w), (int) random(y + h), this,fishImg));
       }
       if(species == 1){
         animals.add(new Animal((int) random(x,x+w), (int) random(y + h),this));
       }
-      if(species == 2){
-        animals.add(new Octopus((int) random(x,x+w), (int) random(y + h - floor_height),this));
+      if(species==2){
+        animals.add(new Octopus((int) random(x,x+w), (int) random(y + h - floor_height),this,octopusImg));
       }
     }
   }
@@ -62,16 +59,40 @@ class Tank {
     }
   }
   
-  void addAnimal(Animal a){
-    animals.add(a);
-  }
-  
   void interactions(){
+    ArrayList<Egg> eggs = new ArrayList<Egg>();
     for (Animal a: animals){
-      a.interaction(animals);
+      Egg babs = (Egg) a.interaction(animals);
+      if(babs!=null){
+        eggs.add(babs);
+        println("layed an egg");
+      }
+    }
+    for(Egg e: eggs){
+      animals.add(e);
     }
   }
   
+  void hatch(){
+    ArrayList<Animal> babys = new ArrayList<Animal>();
+    ArrayList<Animal> hatchedEggs = new ArrayList<Animal>();
+    for (Animal a: animals){
+      if(a instanceof Egg){
+        Egg egg = (Egg) a;
+        Animal baby = egg.hatch();
+        if (baby != null){
+          babys.add(baby);
+          hatchedEggs.add(a);
+        }
+      }
+    }
+    for (Animal a: babys){
+      animals.add(a);
+    }
+    for (Animal e: hatchedEggs){
+      animals.remove(e);
+    }
+  }
   PVector bottomCorner(){
     return new PVector(x+w,y+h);
   }
@@ -80,17 +101,18 @@ class Tank {
     return new PVector(x,y);
   }
   
+  void addAniaml(Animal a){
+    animals.add(a);
+  }
   
+  void addAnimal(int x, int y){
+    animals.add(new Fish(x,y,this,fishImg));
+  }
   
-  
-  
-  
-  
-  ////////////////////////
   void addAnimal(char i){
     switch(i){
       case '0':
-        animals.add(new Starfish(mouseX,mouseY,50,this));
+        animals.add(new Starfish(mouseX,mouseY,20,this));
         break;
     }
   }

@@ -14,7 +14,7 @@ class Crab extends Animal {
       if (position.y  >= myTank.bottomCorner().y - myTank.floor_height) {
         reachedFloor = true;
         velocity.y = 0; // Stop falling when reached the floor
-        velocity.x = speedGenerator(); // Start crawling randomly left or right
+        velocity.x = random(-2,2); // Start crawling randomly left or right
       } else {
         position.y += velocity.y; // Continue falling until reached the floor
       }

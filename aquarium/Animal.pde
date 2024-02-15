@@ -1,17 +1,19 @@
-class Animal {
+class Animal implements Cloneable{
   PVector position, velocity;
   color c;
   int size;
   
-  int sizeL;
-  int sizeH;
-    
   Tank myTank; //to know container attributes
   
-  int MAXVELOCITY = 10;
-  
+  int MAXVELOCITY = 7;
+  int MAXKIDS = 2;
+  int REPRODUCTIVEAGE = (int)2.5*60;
+  int LIFESPAN = 10*60;
+  Animal parent;
   //Interaction Vars
   int foodChainID;
+  int kids;
+  int bornTime;
   
   //State Vars
   boolean alive;
@@ -19,22 +21,41 @@ class Animal {
   
   Animal(int x,int y, int size, Tank myTank){
     this.size = size;
-    position = new PVector(x,y);
-    velocity = new PVector();
-    c = #FF0000;
+    this.position = new PVector(x,y);
+    this.velocity = new PVector();
+    this.c = #FF0000;
     this.myTank = myTank;
     this.foodChainID =size;
-    alive = true;
-    remove = false;
+    this.alive = true;
+    this.remove = false;
+    this.kids = 0;
+    parent = null;
+    bornTime = frameCount;
+  }
+
+  Animal(Tank myTank){
+  }
+
+  
+  void setupObject(Animal other){
+    other.size = 30;
+    other.position = new PVector(position.x,position.y);
+    other.velocity = new PVector((int)random(-2,2),(int)random(-2,2));
+    other.c = #FF0000;
+    other.myTank = myTank;
+    other.foodChainID =size;
+    other.alive = true;
+    other.remove = false;
+    other.kids = 0;
+    other.parent = this;
+    other.bornTime = frameCount;
   }
   
   Animal(int x,int y, Tank myTank){
     this(x,y,20, myTank);
   }
   
-  Animal(Tank myTank){
-  }
-  
+
   boolean inXBounds(PVector nextPos){
     return nextPos.x - size/2 <= myTank.topCorner().x ||
         nextPos.x + size/2 >= myTank.bottomCorner().x;
@@ -46,6 +67,7 @@ class Animal {
   }
   
   void move(){
+    update();
     changeV(); //random velocity change
     PVector nextPos = position.copy();
     nextPos.add(velocity);
@@ -76,6 +98,23 @@ class Animal {
     circle(position.x,position.y, size);
   }
   
+  
+  void update(){
+    if(frameCount - bornTime > LIFESPAN){
+      die();
+    }
+    if(frameCount %60 == 0){
+    if(!canReproduce(this)){
+      size++;
+    }
+    else{
+    size -= 4;
+    if(size <= 0){
+      die();
+    }
+    }
+    }
+  }
   void changeV(int dx, int dy){
     velocity.add(new PVector(dx,dy));
     if (abs(velocity.x) > MAXVELOCITY){
@@ -92,35 +131,71 @@ class Animal {
     changeV(dx,dy);
   }
   
-  void interaction(ArrayList<Animal> animals){
+  boolean sameSpecies(Object other){
+    return this.getClass() == other.getClass();
+  }
+  
+  @Override
+  protected Object clone() throws CloneNotSupportedException {
+    println("cloning");
+    Animal a = (Animal) super.clone();
+    a.position = this.position.copy();
+    a.velocity = this.velocity.copy();
+    return a;
+  }
+  boolean canReproduce(Animal a){
+    return frameCount - a.bornTime > REPRODUCTIVEAGE;
+  }
+  Animal interaction(ArrayList<Animal> animals){
+    Egg e = null;
+    
     for (Animal other: animals){
       if(other != this && isTouching(other) && alive && other.alive && random(1) > 0.5){
-        //basic eat
-        float theirFactor = random(2);
-        float myFactor = random(2);
-        
-        if(other.foodChainID*theirFactor < this.foodChainID*myFactor){
-          this.eat(other);
-          other.die();
+        if(sameSpecies(other) 
+          && this.kids<MAXKIDS 
+          && other.kids<other.MAXKIDS 
+          && canReproduce(this)
+          && canReproduce(other)){//same species
+          Animal baby;
+          try {
+            baby = (Animal)this.clone();
+          } catch (CloneNotSupportedException ex) {
+            baby = new Animal((int)position.x,(int)position.y,10,myTank);
+          }
+          setupObject(baby);
+          e = new Egg((int)position.x,(int)position.y,2*60,10, baby,myTank);
+          this.kids++;
         }
-        else if(other.foodChainID*theirFactor == this.foodChainID*myFactor){
+        else if(!(other instanceof Egg ||sameSpecies(other) )){
+          //basic eat
+          float theirFactor = random(2);
+          float myFactor = random(2);
           
-          if(random(1) > 0.5){
+          if(other.foodChainID*theirFactor < this.foodChainID*myFactor){
             this.eat(other);
             other.die();
           }
-          else{
+          else if(other.foodChainID*theirFactor == this.foodChainID*myFactor){
+            
+            if(random(1) > 0.5){
+              this.eat(other);
+              other.die();
+            }
+            else{
+              other.eat(this);
+              this.die();
+            }
+            
+          }
+          else {
             other.eat(this);
             this.die();
           }
-          
         }
-        else {
-          other.eat(this);
-          this.die();
-        }
+        
       }
     }
+    return e;
   }
   
   void die(){
@@ -147,15 +222,4 @@ class Animal {
   boolean isTouching(Animal other){
     return dist(this.position.x,this.position.y,other.position.x,other.position.y) < (this.size+other.size)/2 - 4;
   }
-  
-  //NEW METHODS
-  int speedGenerator() {
-    int genspeed = int(random(-4,4));
-    while (genspeed == 0) {
-       genspeed = int(random(-4,4));
-    } 
-    return genspeed;
-  }
-  
-  
 }
