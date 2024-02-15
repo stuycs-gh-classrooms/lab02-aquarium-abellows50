@@ -4,7 +4,7 @@ class Octopus extends Animal{
   Octopus(int x,int y, int size, Tank myTank){
     super(x,y,size,myTank);
     img = loadImage("octopus.png");
-    this.foodChainID = size*2;
+    this.foodChainID = size;
     this.MAXVELOCITY = 5;
   }
   

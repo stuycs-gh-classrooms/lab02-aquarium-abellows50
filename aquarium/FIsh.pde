@@ -28,7 +28,7 @@ class Fish extends Animal{
   }
   
   void updateFoodChain(Animal other){
-    foodChainID = other.foodChainID*2 + foodChainID;
+    foodChainID = other.foodChainID + foodChainID;
   }
   
   void changeV(){
