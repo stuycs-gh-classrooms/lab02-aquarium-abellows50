@@ -8,7 +8,7 @@ class Animal implements Cloneable{
   int MAXVELOCITY = 7;
   int MAXKIDS = 2;
   int REPRODUCTIVEAGE = (int)2.5*60;
-  int LIFESPAN = 10*60;
+  int LIFESPAN = 100*60;
   Animal parent;
   //Interaction Vars
   int foodChainID;
@@ -166,7 +166,8 @@ class Animal implements Cloneable{
           e = new Egg((int)position.x,(int)position.y,2*60,10, baby,myTank);
           this.kids++;
         }
-        else if(!(other instanceof Egg ||sameSpecies(other) )){
+        //else if(!(other instanceof Egg ||sameSpecies(other) )){
+        else if(!(other instanceof Egg && canReproduce(this))){
           //basic eat
           float theirFactor = random(2);
           float myFactor = random(2);

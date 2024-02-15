@@ -114,6 +114,15 @@ class Tank {
       case '0':
         animals.add(new Starfish(mouseX,mouseY,20,this));
         break;
+      case '1':
+        animals.add(new Crab(mouseX,mouseY,this));
+        break;
+      case '2':
+        animals.add(new Fish(mouseX,mouseY,20,this,fishImg));
+        break;
+      case '3':
+        animals.add(new Octopus(mouseX,mouseY,20,this,octopusImg));
+        break;
     }
   }
 }

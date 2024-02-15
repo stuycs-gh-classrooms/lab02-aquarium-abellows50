@@ -4,7 +4,7 @@ class Fish extends Animal{
   Fish(int x,int y, int size, Tank myTank, PImage img){
     super(x,y,size,myTank);
     this.img = img;
-    this.foodChainID = size/2;
+    this.foodChainID = size/4;
     this.MAXVELOCITY = 5;
   }
   
