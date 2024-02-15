@@ -62,6 +62,10 @@ class Tank {
     }
   }
   
+  void addAnimal(Animal a){
+    animals.add(a);
+  }
+  
   void interactions(){
     for (Animal a: animals){
       a.interaction(animals);

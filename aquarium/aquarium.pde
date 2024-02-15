@@ -24,5 +24,7 @@ void draw() {
 }
 
 void mouseClicked() {
-  t.populate(100);
+  //t.populate(100);
+  println("clicked");
+  t.addAnimal(new Crab(mouseX,mouseY,t));
 }

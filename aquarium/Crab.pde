@@ -3,6 +3,7 @@ class Crab extends Animal {
 
   Crab(int _ax, int _ay, Tank myTank) {
     super(_ax, _ay, myTank);
+    velocity.y = 1;
   }
 
   void move() {
@@ -10,25 +11,21 @@ class Crab extends Animal {
       velocity.y *= -1;
     }
     if (!reachedFloor) {
-      if (position.y + sizeH >= myTank.bottomCorner().y - myTank.floor_height) {
+      if (position.y  >= myTank.bottomCorner().y - myTank.floor_height) {
         reachedFloor = true;
         velocity.y = 0; // Stop falling when reached the floor
         velocity.x = speedGenerator(); // Start crawling randomly left or right
       } else {
-        ay += yspeed; // Continue falling until reached the floor
+        position.y += velocity.y; // Continue falling until reached the floor
       }
     } else {
       // Randomly change direction when hitting the walls
-      if (ax + aw >= width || ax <= 0) {
-        xspeed *= -1;
+      if (position.y + sizeL >= width || position.x <= 0) {
+        velocity.x *= -1;
       }
-      ax += xspeed; // Move horizontally
+      position.x += velocity.x; // Move horizontally
     }
   }
 
-  void display() {
-    fill(255, 0, 0); // Change color for the crab
-    stroke(0);
-    rect(ax, ay, aw, ah);
-  }
+
 }

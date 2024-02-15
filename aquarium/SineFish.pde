@@ -19,7 +19,7 @@ class SineFish extends Animal {
   }
 
   void display() {
-    fill(255, 0, 255); 
+    fill(0, 0, 255); 
     stroke(0);
     rect(position.x, position.y, sizeH, sizeL);
   }
