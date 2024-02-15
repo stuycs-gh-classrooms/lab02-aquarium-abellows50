@@ -8,7 +8,7 @@ class Animal implements Cloneable{
   int MAXVELOCITY = 7;
   int MAXKIDS = 2;
   int REPRODUCTIVEAGE = (int)2.5*60;
-  int LIFESPAN = 100*60;
+  int LIFESPAN = 20*60;
   Animal parent;
   //Interaction Vars
   int foodChainID;

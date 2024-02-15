@@ -6,7 +6,7 @@ class Egg extends Animal{
 
 
   Egg(int x, int y, int maturationTime, int strength, Animal baby, Tank myTank){
-    super(x,y,myTank);
+    super(x,y,10,myTank);
     this.baby = baby;
     foodChainID = strength;
     this.maturationTime = maturationTime;

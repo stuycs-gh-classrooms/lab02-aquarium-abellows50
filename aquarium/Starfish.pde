@@ -8,6 +8,7 @@ class Starfish extends Animal {
     c = color(234, 132, 36);
     numPoints = int(random(5, 8));
     p = new Polygon(numPoints,px,py,size);
+    
   }
   
    void display(){
@@ -18,11 +19,11 @@ class Starfish extends Animal {
    
    void changeV(){
      int dy = 0;
-     if (position.y + random((-myTank.h+myTank.floor_height)/2) < myTank.floor_height){
+     if (position.y < myTank.h-myTank.floor_height + random(myTank.floor_height) ){
        println("above sand");
-        dy = (int)random(-2,4);
+        dy = (int)random(-2,3);
      }
-    changeV(0,dy);
+    changeV((int)random(-3,3),dy);
   }
    
   }
