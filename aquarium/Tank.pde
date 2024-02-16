@@ -121,7 +121,7 @@ class Tank {
   
   void addAnimal(char i){
     switch(i){
-      case '0':
+      case '4':
         animals.add(new Starfish(mouseX,mouseY,20,this));
         break;
       case '1':
