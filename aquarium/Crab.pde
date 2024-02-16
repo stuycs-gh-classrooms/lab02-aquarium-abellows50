@@ -5,7 +5,7 @@ class Crab extends Animal {
     super(_ax, _ay, myTank);
     velocity.y = 1;
     this.LIFESPAN = 200*60;
-    this.foodChainID = 200;
+    this.foodChainID = 0;
   }
 
   void changeV(){
