@@ -56,12 +56,12 @@ class Animal implements Cloneable{
   }
   
 
-  boolean inXBounds(PVector nextPos){
+  boolean outXBounds(PVector nextPos){
     return nextPos.x - size/2 <= myTank.topCorner().x ||
         nextPos.x + size/2 >= myTank.bottomCorner().x;
   }
   
-  boolean inYBounds(PVector nextPos){
+  boolean outYBounds(PVector nextPos){
     return nextPos.y - size/2  <= myTank.topCorner().y ||
         nextPos.y + size/2  >= myTank.bottomCorner().y;
   }
@@ -71,15 +71,18 @@ class Animal implements Cloneable{
     changeV(); //random velocity change
     PVector nextPos = position.copy();
     nextPos.add(velocity);
-    if (inXBounds(nextPos)){
+    if (outXBounds(nextPos)){
           velocity.x = -velocity.x;
     }
-    if (inYBounds(nextPos)){
+    if (outYBounds(nextPos)){
           velocity.y = -velocity.y;
     }
     position.add(velocity);
-
-      if(position.y - size/2 < myTank.topCorner().y){
+    forceInside();
+      
+  }
+  void forceInside(){
+    if(position.y - size/2 < myTank.topCorner().y){
         position.y = myTank.topCorner().y + size/2 + 1;
       }
       if(position.y + size/2 > myTank.bottomCorner().y){
@@ -92,7 +95,6 @@ class Animal implements Cloneable{
         position.x = myTank.bottomCorner().x - size/2 - 1;
       }
   }
-  
   void display(){
     fill(c);
     circle(position.x,position.y, size);
