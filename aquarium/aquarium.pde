@@ -23,22 +23,7 @@ void setup() {
 
 void draw(){
   background(150);
-  t.moveAnimals();
-  
-  
-  t.interactions();
-  t.hatch();
-  
-  t.clean();
-  t.display();
-  
-}
-
-void mouseClicked() {
-
-  println("clicked");
-  //t.addAnimal(new Crab(mouseX,mouseY,t));
-
+  t.runSim();
 }
 
 void keyPressed(){

@@ -16,6 +16,16 @@ class Tank {
     animals = new ArrayList<Animal>();
   }
   
+  void runSim(){
+    this.moveAnimals();
+  
+  
+    this.interactions();
+    this.hatch();
+  
+    this.clean();
+    this.display();
+  }
   void display(){
     fill(WATER);
     rect(x,y,w,h);
